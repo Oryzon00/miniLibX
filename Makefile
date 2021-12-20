@@ -1,37 +1,34 @@
-SRCS =	
+SRC = main.c	\
 
-OBJS = $(SRCS:.c=.o)
-
-BONUS =
-
-BONUS_OBJS = $(BONUS:.c=.o)
+OBJ = $(SRC:.c=.o)
 
 CC = gcc
 
 RM = rm -f
 
-CFLAGS = -Wall -Wextra -Werror -I
+CFLAGS = -Wall -Wextra -Werror
 
-NAME = libftprintf.a
+NAME = test
+
+PATH_MLX =./mlx
+
+LINUX    = -I /usr/include -L /usr/lib -L mlx_linux -I mlx_linux -lXext -l X11 -lm -lz
 
 %.o: %.c
-	$(CC) -Wall -Wextra -Werror -Imlx -c $< -o $@
-
+		$(CC) -I /usr/include -Imlx_linux -O3 -c $< -o $@
 
 all: $(NAME)
 
-$(NAME):	$(OBJS)
-			ar rcs $(NAME) $(OBJS)
+$(NAME):	$(OBJ)
+			make -C $(PATH_MLX) all
+			$(CC) $(OBJ) mlx/libmlx_Linux.a $(LINUX) -o $(NAME)
 
 clean:
-			rm -f $(OBJS) $(BONUS_OBJS)
+		rm -f $(OBJ) 
 
-fclean:		clean
-			rm -f $(NAME)
+fclean:	clean
+		rm -f $(NAME)
 
-re: 		fclean $(NAME)
+re:		fclean $(NAME)
 
-bonus:		$(OBJS) $(BONUS_OBJS)
-			ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
-
-.PHONY:		all clean fclean re bonus
+.PHONY:		all clean fclean re 
