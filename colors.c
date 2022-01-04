@@ -22,7 +22,6 @@ Binaire :  00000000 11111111 00000000 00000000
 int	create_trgb(int t, int r, int g, int b)
 {
 	return (t << 24 | r << 16 | g << 8 | b);
-	// 0x
 }
 
 int	get_t(int trgb)
