@@ -8,7 +8,7 @@ RM = rm -f
 
 CFLAGS = -Wall -Wextra -Werror
 
-NAME = test
+NAME = output
 
 PATH_MLX =./mlx
 
