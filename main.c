@@ -1,5 +1,11 @@
 #include "mlx/mlx.h"
 
+// open, read, write, close
+// ◦ malloc, free
+// ◦ perror, strerror
+// ◦ exit
+// ◦ Toutes les fonctions de la lib math (-lm et man 3 math)
+// ◦ Toutes les fonctions de la miniLibX.
 
 
 typedef struct	s_data 
@@ -34,7 +40,7 @@ void    print_square(int x, t_data *img)
     }
 }
 
-void print_triangle(int x, t_data *img)
+void    print_triangle(int x, t_data *img)
 {
     int i;
 
@@ -49,6 +55,25 @@ void print_triangle(int x, t_data *img)
 
 }
 
+void    print_square_texture(int x, t_data *img)
+{
+    int i;
+    int j;
+
+    i = 0;
+    j = 0;
+    while (j < x)
+    {
+        while (i < x)
+        {
+            my_mlx_pixel_put(img, 900 + i, 500 + j, 0x00FF0000);
+            i += 5;
+        }
+        j += 2;
+        i = 0;
+    }
+}
+
 int	main(void)
 {
 	void	*mlx;
@@ -60,7 +85,8 @@ int	main(void)
 	img.img = mlx_new_image(mlx, 1920, 1080);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 								&img.endian);
-    print_triangle(500, &img);
+    print_square_texture(300, &img);
+
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 }
