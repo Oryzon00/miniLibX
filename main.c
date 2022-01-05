@@ -123,7 +123,6 @@ void	print_colors(int x, t_data *img)
 	while (i < x)
 	{
 		ratio = (i / x);
-		printf("%f\n", ratio);
 		couleur1.inside.b = 255 + ratio * (30 - 255);
 		couleur1.inside.r = 30 + ratio * (255 - 30);
 		my_mlx_pixel_put(img, 800 + i, 500, couleur1.trgb);
@@ -135,16 +134,17 @@ void	print_colors(int x, t_data *img)
 int	close(t_vars *vars)
 {
 	mlx_destroy_window(vars->mlx, vars->win);
-	return (0);
+	exit (0);
 }
 
+int	ouverture(t_vars *vars)
+{
+	printf("Bonjour\n");
+}
 int	key_hook(int keycode, t_vars *vars)
 {
 	if (keycode == 65307)
-	{
-		mlx_destroy_window(vars->mlx, vars->win);
-		return (0);
-	}
+		close(vars);
 	printf("keycode: %d\n", keycode);
 	return (0);
 }
@@ -160,6 +160,7 @@ int	main(void)
 {
 	t_vars	vars;
 	t_data	img;
+	char	*str= "Allo\nJ'ecris\nsur\nplsuieurs\nlignes";
 
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, 1920, 1080, "My window");
@@ -172,9 +173,10 @@ int	main(void)
 	mlx_hook(vars.win, ON_DESTROY, 0, close, &vars);
 	mlx_key_hook(vars.win, key_hook, &vars);
 	mlx_mouse_hook(vars.win, mouse_hook, &vars);
+	mlx_expose_hook(vars.win, ouverture, &vars);
 
-	print_square(500, &img);
+	print_colors(500, &img);
 
-	//mlx_string_put to write on the image
+	mlx_string_put(vars.mlx, vars.win, 200, 200, 0x00FFFFFF, str);
 	mlx_loop(vars.mlx);
 }
