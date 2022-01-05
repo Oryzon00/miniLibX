@@ -97,7 +97,7 @@ void	print_square(int x, t_data *img)
 
 	couleur1.trgb = 0x003030FF;
 
-	i = 0;
+	i = 1;
 	while (i < x)
 	{
 		ratio = (i / x);
