@@ -89,26 +89,45 @@ void    print_square_texture(int x, t_data *img)
     }
 }
 
-void	print_square(int x, t_data *img)
+void	print_pink_floyd(int x, t_data *img)
 {
 	double	i;
+	int		j;
 	double	ratio;
 	t_color couleur1;
+	int		f;
 
-	couleur1.trgb = 0x003030FF;
-
-	i = 1;
-	while (i < x)
+	
+	j = 0;
+	while (j < x)
 	{
-		ratio = (i / x);
-		couleur1.inside.b = 255 + ratio * (30 - 255);
-		couleur1.inside.r = 30 + ratio * (255 - 30);
-		couleur1.inside.g++;
-		my_mlx_pixel_put(img, 800 + i, 500, couleur1.trgb);
-		my_mlx_pixel_put(img, 800 + x - i, 500 + x, couleur1.trgb);
-		my_mlx_pixel_put(img, 800, 500 + i, couleur1.trgb);
-		my_mlx_pixel_put(img, 800 + x, 500 + x - i, couleur1.trgb);
-		i++;
+		couleur1.trgb = 0x003030FF;
+		i = 1;
+		f = 0;
+		while (i < j)
+		{
+			ratio = (i / j);
+			couleur1.inside.b = 255 + ratio * (30 - 255);
+			couleur1.inside.r = 30 + ratio * (255 - 30);
+			if (f == 0)
+			{
+				couleur1.inside.g++;
+				if (couleur1.inside.g == 255)
+					f = 1;
+			}
+			else
+			{
+				couleur1.inside.g--;
+				if (couleur1.inside.g == 30)
+					f = 0;
+			}
+			my_mlx_pixel_put(img, 800 + i, 500, couleur1.trgb);
+			my_mlx_pixel_put(img, 800 + j - i, 500 + j, couleur1.trgb);
+			my_mlx_pixel_put(img, 800, 500 + i, couleur1.trgb);
+			my_mlx_pixel_put(img, 800 + j, 500 + j - i, couleur1.trgb);
+			i++;
+		}
+		j += 1;
 	}
 }
 
@@ -175,7 +194,7 @@ int	main(void)
 	mlx_mouse_hook(vars.win, mouse_hook, &vars);
 	mlx_expose_hook(vars.win, ouverture, &vars);
 
-	print_colors(500, &img);
+	print_pink_floyd(500, &img);
 
 	mlx_string_put(vars.mlx, vars.win, 200, 200, 0x00FFFFFF, str);
 	mlx_loop(vars.mlx);
